@@ -1,4 +1,4 @@
-import { useConfig } from "@/hooks/useConfig";
+import { useConfig } from "@/hooks/use-config";
 import {
   Clock,
   Navigation as NavigationIcon,
@@ -8,7 +8,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { formatEventDate } from "@/lib/formatEventDate";
+import { formatEventDate } from "@/lib/format-event-date";
 
 export default function Location() {
   const config = useConfig(); // Use hook to get config from API or fallback to static

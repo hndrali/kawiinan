@@ -9,7 +9,7 @@ import {
   MessageCircleHeart
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
-import { useConfig } from '@/hooks/useConfig';
+import { useConfig } from '@/hooks/use-config';
 
 const baseMenuItems = [
   { icon: Home, label: 'Beranda', href: '#home', id: 'home' },

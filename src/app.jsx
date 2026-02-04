@@ -18,13 +18,13 @@
 import { useState, lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { useInvitation } from "@/context/InvitationContext";
+import { useInvitation } from "@/context/invitation-context";
 import staticConfig from "@/config/config";
 
 // Lazy load components for better performance
-const Layout = lazy(() => import("@/components/Layout"));
-const MainContent = lazy(() => import("@/pages/MainContent"));
-const LandingPage = lazy(() => import("@/pages/LandingPage"));
+const Layout = lazy(() => import("@/components/layout"));
+const MainContent = lazy(() => import("@/pages/main-content"));
+const LandingPage = lazy(() => import("@/pages/landing-page"));
 
 /**
  * App component serves as the root of the application.

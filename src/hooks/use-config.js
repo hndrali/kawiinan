@@ -1,4 +1,4 @@
-import { useInvitation } from '@/context/InvitationContext';
+import { useInvitation } from '@/context/invitation-context';
 import staticConfig from '@/config/config';
 
 /**

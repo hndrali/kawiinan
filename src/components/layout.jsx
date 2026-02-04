@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Music, PauseCircle, PlayCircle } from 'lucide-react';
-import { useConfig } from '@/hooks/useConfig';
-import BottomBar from '@/components/BottomBar';
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Music, PauseCircle, PlayCircle } from "lucide-react";
+import { useConfig } from "@/hooks/use-config";
+import BottomBar from "@/components/bottom-bar";
 
 const Layout = ({ children }) => {
   const config = useConfig(); // Use hook to get config from API or fallback to static
@@ -14,7 +14,9 @@ const Layout = ({ children }) => {
   // First useEffect to handle initial setup and auto-play attempt
   useEffect(() => {
     // Create audio element
-    audioRef.current = new Audio(config.audio?.src || '/audio/fulfilling-humming.mp3');
+    audioRef.current = new Audio(
+      config.audio?.src || "/audio/fulfilling-humming.mp3",
+    );
     audioRef.current.loop = config.audio?.loop !== false;
 
     // Try to autoplay
@@ -26,7 +28,7 @@ const Layout = ({ children }) => {
         setShowToast(true);
         setTimeout(() => setShowToast(false), 3000);
       } catch (error) {
-        console.log('Autoplay failed, waiting for user interaction');
+        console.log("Autoplay failed, waiting for user interaction");
         // Add click event listener for first interaction
         const handleFirstInteraction = async () => {
           try {
@@ -35,12 +37,12 @@ const Layout = ({ children }) => {
             wasPlayingRef.current = true;
             setShowToast(true);
             setTimeout(() => setShowToast(false), 3000);
-            document.removeEventListener('click', handleFirstInteraction);
+            document.removeEventListener("click", handleFirstInteraction);
           } catch (err) {
-            console.error('Playback failed after interaction:', err);
+            console.error("Playback failed after interaction:", err);
           }
         };
-        document.addEventListener('click', handleFirstInteraction);
+        document.addEventListener("click", handleFirstInteraction);
       }
     };
 
@@ -99,22 +101,22 @@ const Layout = ({ children }) => {
     };
 
     if (audioRef.current) {
-      audioRef.current.addEventListener('play', handlePlay);
-      audioRef.current.addEventListener('pause', handlePause);
+      audioRef.current.addEventListener("play", handlePlay);
+      audioRef.current.addEventListener("pause", handlePause);
     }
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('blur', handleWindowBlur);
-    window.addEventListener('focus', handleWindowFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("blur", handleWindowBlur);
+    window.addEventListener("focus", handleWindowFocus);
 
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('blur', handleWindowBlur);
-      window.removeEventListener('focus', handleWindowFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("blur", handleWindowBlur);
+      window.removeEventListener("focus", handleWindowFocus);
 
       if (audioRef.current) {
-        audioRef.current.removeEventListener('play', handlePlay);
-        audioRef.current.removeEventListener('pause', handlePause);
+        audioRef.current.removeEventListener("play", handlePlay);
+        audioRef.current.removeEventListener("pause", handlePause);
       }
     };
   }, [isPlaying]);
@@ -131,7 +133,7 @@ const Layout = ({ children }) => {
           wasPlayingRef.current = true;
         }
       } catch (error) {
-        console.error('Playback error:', error);
+        console.error("Playback error:", error);
       }
     }
   };
@@ -145,8 +147,8 @@ const Layout = ({ children }) => {
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
   return (
@@ -176,9 +178,7 @@ const Layout = ({ children }) => {
           )}
         </motion.button>
 
-        <main className="relative h-full w-full pb-[100px]">
-          {children}
-        </main>
+        <main className="relative h-full w-full pb-[100px]">{children}</main>
         <BottomBar />
         {/* Music Info Toast */}
         <AnimatePresence>
@@ -193,7 +193,7 @@ const Layout = ({ children }) => {
               <div className="bg-black/80 text-white transform -translate-x-1/2 px-4 py-2 rounded-full backdrop-blur-sm flex items-center space-x-2">
                 <Music className="w-4 h-4 animate-pulse" />
                 <span className="text-sm whitespace-nowrap">
-                  {config.audio?.title || 'Background Music'}
+                  {config.audio?.title || "Background Music"}
                 </span>
               </div>
             </motion.div>

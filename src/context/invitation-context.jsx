@@ -7,7 +7,7 @@ import {
   storeWeddingUid,
   storeGuestName,
   hasInvitationData,
-} from "@/lib/invitationStorage";
+} from "@/lib/invitation-storage";
 import { safeBase64 } from "@/lib/base64";
 
 const InvitationContext = createContext(null);

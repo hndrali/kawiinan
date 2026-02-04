@@ -1,6 +1,6 @@
 // src/pages/LandingPage.jsx
-import { useConfig } from '@/hooks/useConfig';
-import { formatEventDate } from '@/lib/formatEventDate';
+import { useConfig } from '@/hooks/use-config';
+import { formatEventDate } from '@/lib/format-event-date';
 import { motion } from 'framer-motion';
 import { Calendar, Clock } from 'lucide-react';
 

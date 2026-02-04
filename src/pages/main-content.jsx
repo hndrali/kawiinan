@@ -1,8 +1,8 @@
-import Hero from '@/pages/Hero'
-import Events from '@/pages/Events'
-import Location from '@/pages/Location';
-import Wishes from '@/pages/Wishes';
-import Gifts from '@/pages/Gifts';
+import Hero from '@/pages/hero'
+import Events from '@/pages/events'
+import Location from '@/pages/location';
+import Wishes from '@/pages/wishes';
+import Gifts from '@/pages/gifts';
 
 // Main Invitation Content
 export default function MainContent() {

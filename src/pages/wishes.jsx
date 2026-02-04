@@ -15,10 +15,10 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { formatEventDate } from "@/lib/formatEventDate";
-import { useInvitation } from "@/context/InvitationContext";
+import { formatEventDate } from "@/lib/format-event-date";
+import { useInvitation } from "@/context/invitation-context";
 import { fetchWishes, createWish } from "@/services/api";
-import { getGuestName } from "@/lib/invitationStorage";
+import { getGuestName } from "@/lib/invitation-storage";
 
 export default function Wishes() {
   const { uid } = useInvitation();

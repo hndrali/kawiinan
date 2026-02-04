@@ -1,4 +1,4 @@
-import { useConfig } from '@/hooks/useConfig';
+import { useConfig } from '@/hooks/use-config';
 import { motion } from 'framer-motion'
 import {
     Copy,
