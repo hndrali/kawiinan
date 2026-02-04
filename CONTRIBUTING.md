@@ -154,9 +154,9 @@ sakeenah/
 ├── src/
 │   ├── components/        # React UI components
 │   │   ├── ui/           # Reusable UI components
-│   │   ├── BottomBar.jsx # Navigation component
-│   │   └── EventsCard.jsx
-│   ├── pages/            # Page components (Hero, Wishes, etc.)
+│   │   ├── bottom-bar.jsx # Navigation component
+│   │   └── events-card.jsx
+│   ├── pages/            # Page components (hero.jsx, wishes.jsx, etc.)
 │   ├── context/          # React Context providers
 │   ├── hooks/            # Custom React hooks
 │   ├── lib/              # Utility functions
@@ -169,6 +169,16 @@ sakeenah/
 ├── dist/                 # Production build output
 └── vite.config.js        # Vite configuration
 ```
+
+**File Naming Convention:**
+
+All source files use **kebab-case** naming:
+
+- Components: `bottom-bar.jsx`, `events-card.jsx`, `layout.jsx`
+- Pages: `hero.jsx`, `events.jsx`, `wishes.jsx`, `landing-page.jsx`
+- Hooks: `use-config.js`
+- Utils: `format-event-date.js`, `invitation-storage.js`
+- Context: `invitation-context.jsx`
 
 ## Development Workflow
 
@@ -275,7 +285,7 @@ git push origin main
 **Good Example:**
 
 ```jsx
-// components/WishCard.jsx
+// components/wish-card.jsx
 import { formatDistanceToNow } from "date-fns";
 
 export function WishCard({ name, message, attendance, createdAt }) {
@@ -297,6 +307,12 @@ export function WishCard({ name, message, attendance, createdAt }) {
   );
 }
 ```
+
+**Naming Convention:**
+
+- All filenames use **kebab-case**: `wish-card.jsx`, `use-wishes.js`, `format-date.js`
+- Component names use **PascalCase**: `WishCard`, `EventsList`, `HeroSection`
+- Functions/variables use **camelCase**: `formatDate`, `handleSubmit`, `isLoading`
 
 ### Code Style
 

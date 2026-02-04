@@ -604,14 +604,36 @@ bun run lint             # ESLint code validation
 ```
 sakeenah/
 ├── src/
-│   ├── components/          # React UI components
-│   ├── pages/              # Route pages (LandingPage, MainContent)
+│   ├── components/          # React UI components (kebab-case)
+│   │   ├── bottom-bar.jsx
+│   │   ├── events-card.jsx
+│   │   ├── layout.jsx
+│   │   └── ui/             # Reusable UI components
+│   ├── pages/              # Route pages (kebab-case)
+│   │   ├── landing-page.jsx
+│   │   ├── main-content.jsx
+│   │   ├── hero.jsx
+│   │   ├── events.jsx
+│   │   ├── wishes.jsx
+│   │   ├── location.jsx
+│   │   └── gifts.jsx
 │   ├── context/            # React Context providers
+│   │   └── invitation-context.jsx
+│   ├── hooks/              # Custom hooks (kebab-case)
+│   │   └── use-config.js
+│   ├── lib/                # Utility functions (kebab-case)
+│   │   ├── format-event-date.js
+│   │   ├── invitation-storage.js
+│   │   └── base64.js
 │   ├── config/             # Static configuration (deprecated)
 │   ├── server/             # Backend API
 │   │   ├── server.js       # Hono app initialization
 │   │   ├── db/             # Database schemas and migrations
-│   │   └── routes/         # API endpoint handlers
+│   │   └── schemas.js      # Zod validation schemas
+│   ├── services/           # API client layer
+│   ├── utils/              # Utilities (kebab-case)
+│   │   └── generate-invitation-link.js
+│   ├── app.jsx             # Root component
 │   └── main.jsx            # React application entry
 ├── public/                 # Static assets (images, audio)
 ├── dist/                   # Production build output
@@ -619,6 +641,12 @@ sakeenah/
 ├── wrangler.jsonc          # Cloudflare Workers config
 └── package.json            # Dependencies and scripts
 ```
+
+**File Naming Convention:**
+
+- All source files use **kebab-case**: `hero.jsx`, `use-config.js`, `format-event-date.js`
+- Component names use **PascalCase**: `Hero`, `EventsCard`, `WishForm`
+- Functions/variables use **camelCase**: `formatDate`, `getWishes`, `isLoading`
 
 ## Browser Support
 

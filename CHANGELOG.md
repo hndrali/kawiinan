@@ -26,15 +26,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced pagination validation with automatic string-to-number transformation (23c87eb)
 - Wish creation endpoint now checks for duplicate submissions before inserting
 - Error messages improved to clearly indicate when a guest has already submitted a wish
+- **BREAKING**: All source filenames converted to kebab-case for consistency (4a24aa2)
+  - Components: BottomBar.jsx → bottom-bar.jsx, EventsCard.jsx → events-card.jsx, Layout.jsx → layout.jsx
+  - Pages: Hero.jsx → hero.jsx, Events.jsx → events.jsx, Wishes.jsx → wishes.jsx, etc.
+  - Context: InvitationContext.jsx → invitation-context.jsx
+  - Hooks: useConfig.js → use-config.js
+  - Lib: formatEventDate.js → format-event-date.js, invitationStorage.js → invitation-storage.js
+  - Utils: generateInvitationLink.js → generate-invitation-link.js
+  - Root: App.jsx → app.jsx
+  - All import statements automatically updated
 
 ### Fixed
 
-- **CRITICAL**: Fixed dynamic Tailwind class generation in Hero.jsx FloatingHearts component that would fail at build time (Hero.jsx:89-95)
-- **CRITICAL**: Fixed SSR crash caused by accessing window.innerWidth before component mount in Hero.jsx (Hero.jsx:71)
-- **CRITICAL**: Fixed invalid CSS grid class `md:grid-row-2` to `md:grid-cols-2` in Location.jsx (Location.jsx:56) - Later reverted per user request
-- Fixed missing `calculateTimeLeft` function in useEffect dependency array causing stale closure in Hero.jsx countdown timer (Hero.jsx:41)
-- Fixed misleading helper text in Wishes form that showed "detected from invitation" for manually typed names (Wishes.jsx:281-286)
-- Fixed attendance dropdown not closing when clicking outside the dropdown area (Wishes.jsx:300-354)
+- **CRITICAL**: Fixed dynamic Tailwind class generation in hero.jsx FloatingHearts component that would fail at build time (hero.jsx:89-95)
+- **CRITICAL**: Fixed SSR crash caused by accessing window.innerWidth before component mount in hero.jsx (hero.jsx:71)
+- **CRITICAL**: Fixed invalid CSS grid class `md:grid-row-2` to `md:grid-cols-2` in location.jsx (location.jsx:56) - Later reverted per user request
+- Fixed missing `calculateTimeLeft` function in useEffect dependency array causing stale closure in hero.jsx countdown timer (hero.jsx:41)
+- Fixed misleading helper text in wishes.jsx form that showed "detected from invitation" for manually typed names (wishes.jsx:281-286)
+- Fixed attendance dropdown not closing when clicking outside the dropdown area (wishes.jsx:300-354)
 
 ### Security
 
@@ -46,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added zod@4.3.6 for schema validation (23c87eb)
 - Added @hono/zod-validator@0.7.6 for Hono integration (23c87eb)
+- Updated wrangler from 4.51.0 to 4.62.0 (09a761a)
 
 ## [2.0.0] - 2026-02-04
 
