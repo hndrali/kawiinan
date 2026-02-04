@@ -70,6 +70,7 @@ Sakeenah delivers a comprehensive digital invitation platform:
 | Runtime    | Bun 1.3.5          | Package management and server execution   |
 | Frontend   | React 18 + Vite    | Fast build tooling and reactive UI        |
 | Backend    | Hono               | Lightweight edge-compatible API framework |
+| Validation | Zod                | Type-safe schema validation for API       |
 | Database   | PostgreSQL         | Multi-tenant data storage                 |
 | Styling    | Tailwind CSS       | Utility-first responsive design           |
 | Animation  | Framer Motion      | Declarative animations and transitions    |
@@ -360,11 +361,17 @@ View your personalized invitation: [link]
 
 ## API Reference
 
+All API endpoints use Zod schema validation for type-safe request handling and automatic input sanitization.
+
 ### Invitations
 
 **GET** `/api/invitation/:uid`
 
 Retrieves wedding details including agenda and bank accounts.
+
+**Parameters:**
+
+- `uid` (string): Wedding identifier (lowercase letters, numbers, hyphens only)
 
 Response:
 
@@ -382,13 +389,25 @@ Response:
 
 ### Wishes
 
-**GET** `/api/:uid/wishes?page=1&limit=10`
+**GET** `/api/:uid/wishes?limit=50&offset=0`
 
 Retrieves paginated wishes for a wedding.
+
+**Parameters:**
+
+- `uid` (string): Wedding identifier
+- `limit` (number, optional): Number of wishes to return (max 100, default 50)
+- `offset` (number, optional): Pagination offset (default 0)
 
 **POST** `/api/:uid/wishes`
 
 Creates new wish with attendance status.
+
+**Validation:**
+
+- Name: 1-100 characters, automatically trimmed
+- Message: 1-500 characters, automatically trimmed
+- Attendance: ATTENDING, NOT_ATTENDING, or MAYBE (defaults to MAYBE)
 
 Request body:
 
@@ -396,20 +415,49 @@ Request body:
 {
   "name": "Guest Name",
   "message": "Congratulations!",
-  "attendance": "attending"
+  "attendance": "ATTENDING"
 }
 ```
 
+**DELETE** `/api/:uid/wishes/:id`
+
+Deletes a specific wish (admin function).
+
+**Parameters:**
+
+- `uid` (string): Wedding identifier
+- `id` (number): Wish ID to delete
+
 **GET** `/api/:uid/stats`
 
-Returns attendance statistics:
+Returns attendance statistics.
+
+Response:
 
 ```json
 {
   "attending": 45,
   "not_attending": 12,
-  "undecided": 8,
+  "maybe": 8,
   "total": 65
+}
+```
+
+### Validation Errors
+
+All endpoints return validation errors in the following format when input is invalid:
+
+```json
+{
+  "success": false,
+  "error": {
+    "issues": [
+      {
+        "path": ["name"],
+        "message": "Name must be less than 100 characters"
+      }
+    ]
+  }
 }
 ```
 

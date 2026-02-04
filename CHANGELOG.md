@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Comprehensive Zod validation schemas in src/server/schemas.js for all API endpoints (23c87eb)
+- Automatic input sanitization and transformation through Zod middleware (23c87eb)
+- Regex validation for wedding UID format enforcement (lowercase, numbers, hyphens only) (23c87eb)
+- Detailed validation error messages for better debugging and user feedback (23c87eb)
+
+### Changed
+
+- Refactored all API endpoints to use zValidator middleware for type-safe request validation (23c87eb)
+- Replaced manual validation code with declarative Zod schemas across invitation and wishes endpoints (23c87eb)
+- Enhanced pagination validation with automatic string-to-number transformation (23c87eb)
+
+### Dependencies
+
+- Added zod@4.3.6 for schema validation (23c87eb)
+- Added @hono/zod-validator@0.7.6 for Hono integration (23c87eb)
+
 ## [2.0.0] - 2026-02-04
 
 ### Added
