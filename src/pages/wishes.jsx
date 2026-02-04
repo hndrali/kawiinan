@@ -12,6 +12,7 @@ import {
   XCircle,
   HelpCircle,
   Loader2,
+  AlertCircle,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -31,6 +32,7 @@ export default function Wishes() {
   const dropdownRef = useRef(null);
   const [isNameFromInvitation, setIsNameFromInvitation] = useState(false);
   const [hasSubmittedWish, setHasSubmittedWish] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Get guest name from localStorage
   useEffect(() => {
@@ -96,6 +98,7 @@ export default function Wishes() {
         setNewWish("");
         setAttendance("");
         setHasSubmittedWish(true);
+        setErrorMessage("");
         // Show confetti
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
@@ -107,11 +110,11 @@ export default function Wishes() {
       // Check if it's a duplicate wish error
       if (err.message.includes("already submitted")) {
         setHasSubmittedWish(true);
-        alert(
-          "Anda sudah mengirim pesan sebelumnya. Setiap tamu hanya dapat mengirim satu pesan.",
-        );
+        setErrorMessage("");
       } else {
-        alert("Gagal mengirim pesan. Silakan coba lagi.");
+        setErrorMessage("Gagal mengirim pesan. Silakan coba lagi.");
+        // Auto-hide error after 5 seconds
+        setTimeout(() => setErrorMessage(""), 5000);
       }
     },
   });
@@ -121,9 +124,13 @@ export default function Wishes() {
     if (!newWish.trim() || !guestName.trim()) return;
 
     if (!uid) {
-      alert("Invitation UID not found. Please check your URL.");
+      setErrorMessage("Undangan tidak ditemukan. Silakan periksa URL Anda.");
+      setTimeout(() => setErrorMessage(""), 5000);
       return;
     }
+
+    // Clear any previous errors
+    setErrorMessage("");
 
     createWishMutation.mutate({
       name: guestName.trim(),
@@ -310,6 +317,32 @@ export default function Wishes() {
             ) : (
               <form onSubmit={handleSubmitWish} className="relative">
                 <div className="backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
+                  {/* Error Message */}
+                  <AnimatePresence>
+                    {errorMessage && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="mb-4 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start space-x-3"
+                      >
+                        <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <p className="text-sm text-rose-800 font-medium">
+                            {errorMessage}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setErrorMessage("")}
+                          className="text-rose-400 hover:text-rose-600 transition-colors"
+                        >
+                          <XCircle className="w-4 h-4" />
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                   <div className="space-y-2">
                     {/* Name Input - Pre-filled from URL or editable */}
                     <div className="space-y-2">
