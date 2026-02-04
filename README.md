@@ -24,15 +24,11 @@ Traditional wedding invitations face significant challenges:
 
 Sakeenah delivers a comprehensive digital invitation platform:
 
-**Personalized Guest Experience**: URL-based guest identification pre-fills names and tracks individual invitation engagement without requiring login.
-
-**Multi-Tenant Architecture**: Host unlimited weddings from a single deployment with complete data isolation and per-wedding customization.
-
-**Mobile-First Design**: Responsive layouts optimized for smartphones ensure seamless experiences across all devices and screen sizes.
-
-**Real-Time Interaction**: PostgreSQL-backed wish system with attendance tracking provides instant feedback and engagement metrics.
-
-**Edge Deployment Ready**: Cloudflare Workers support enables global distribution with sub-50ms response times and 99.99% uptime.
+- **Personalized Guest Experience**: URL-based guest identification pre-fills names and tracks individual invitation engagement without requiring login
+- **Multi-Tenant Architecture**: Host unlimited weddings from a single deployment with complete data isolation and per-wedding customization
+- **Mobile-First Design**: Responsive layouts optimized for smartphones ensure seamless experiences across all devices and screen sizes
+- **Real-Time Interaction**: PostgreSQL-backed wish system with attendance tracking provides instant feedback and engagement metrics
+- **Edge Deployment Ready**: Cloudflare Workers support enables global distribution with sub-50ms response times and 99.99% uptime
 
 ## Core Features
 
