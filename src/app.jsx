@@ -20,6 +20,7 @@ import { AnimatePresence } from "framer-motion";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Heart } from "lucide-react";
 import { useInvitation } from "@/features/invitation";
+import { useAudio } from "@/hooks/use-audio";
 import staticConfig from "@/config/config";
 
 // Lazy load components for better performance
@@ -56,6 +57,20 @@ function App() {
   // Use config from API if available, otherwise fall back to static config
   const activeConfig = config || staticConfig.data;
 
+  // Initialize audio with config settings
+  const audioControls = useAudio({
+    src: activeConfig?.audio?.src || "/audio/fulfilling-humming.mp3",
+    loop: activeConfig?.audio?.loop !== false,
+  });
+
+  // Handle opening the invitation - this is called from a user click,
+  // which is the perfect opportunity to start audio (browser policy compliant)
+  const handleOpenInvitation = async () => {
+    // Start audio playback during user interaction
+    await audioControls.play();
+    setIsInvitationOpen(true);
+  };
+
   // Show loading state
   if (isLoading) {
     return (
@@ -76,7 +91,7 @@ function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-50">
         <div className="text-center max-w-md mx-auto p-6">
-          <div className="text-rose-500 text-6xl mb-4">⚠️</div>
+          <div className="text-rose-500 text-6xl mb-4">!</div>
           <h1 className="text-2xl font-serif text-gray-800 mb-2">
             Undangan Tidak Ditemukan
           </h1>
@@ -144,9 +159,9 @@ function App() {
       >
         <AnimatePresence mode="wait">
           {!isInvitationOpen ? (
-            <LandingPage onOpenInvitation={() => setIsInvitationOpen(true)} />
+            <LandingPage onOpenInvitation={handleOpenInvitation} />
           ) : (
-            <Layout>
+            <Layout audioControls={audioControls}>
               <MainContent />
             </Layout>
           )}

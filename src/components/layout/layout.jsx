@@ -1,155 +1,38 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Music, PauseCircle, PlayCircle } from "lucide-react";
 import { useConfig } from "@/features/invitation/hooks/use-config";
 import BottomBar from "@/components/layout/bottom-bar";
 
-const Layout = ({ children }) => {
-  const config = useConfig(); // Use hook to get config from API or fallback to static
-  const [isPlaying, setIsPlaying] = useState(false);
+/**
+ * Layout component that wraps the main invitation content.
+ * Handles music playback controls and navigation.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components to render
+ * @param {Object} props.audioControls - Audio controls from useAudio hook
+ * @param {boolean} props.audioControls.isPlaying - Whether audio is playing
+ * @param {Function} props.audioControls.toggle - Toggle audio play/pause
+ */
+const Layout = ({ children, audioControls }) => {
+  const config = useConfig();
   const [showToast, setShowToast] = useState(false);
-  const audioRef = useRef(null);
-  const wasPlayingRef = useRef(false);
 
-  // First useEffect to handle initial setup and auto-play attempt
+  const { isPlaying, toggle } = audioControls || {};
+
+  // Show toast when audio starts playing
   useEffect(() => {
-    // Create audio element
-    audioRef.current = new Audio(
-      config.audio?.src || "/audio/fulfilling-humming.mp3",
-    );
-    audioRef.current.loop = config.audio?.loop !== false;
-
-    // Try to autoplay
-    const attemptAutoplay = async () => {
-      try {
-        await audioRef.current.play();
-        setIsPlaying(true);
-        wasPlayingRef.current = true;
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-      } catch {
-        console.log("Autoplay failed, waiting for user interaction");
-        // Add click event listener for first interaction
-        const handleFirstInteraction = async () => {
-          try {
-            await audioRef.current.play();
-            setIsPlaying(true);
-            wasPlayingRef.current = true;
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 3000);
-            document.removeEventListener("click", handleFirstInteraction);
-          } catch (err) {
-            console.error("Playback failed after interaction:", err);
-          }
-        };
-        document.addEventListener("click", handleFirstInteraction);
-      }
-    };
-
-    attemptAutoplay();
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
-
-  // Second useEffect to handle visibility and focus changes
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        wasPlayingRef.current = isPlaying;
-        if (audioRef.current && isPlaying) {
-          audioRef.current.pause();
-          setIsPlaying(false);
-        }
-      } else {
-        if (audioRef.current && wasPlayingRef.current) {
-          audioRef.current.play().catch(console.error);
-          setIsPlaying(true);
-        }
-      }
-    };
-
-    const handleWindowBlur = () => {
-      wasPlayingRef.current = isPlaying;
-      if (audioRef.current && isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      }
-    };
-
-    const handleWindowFocus = () => {
-      if (audioRef.current && wasPlayingRef.current) {
-        audioRef.current.play().catch(console.error);
-        setIsPlaying(true);
-      }
-    };
-
-    // Audio event listeners
-    const handlePlay = () => {
-      setIsPlaying(true);
+    if (isPlaying) {
       setShowToast(true);
-      setTimeout(() => setShowToast(false), config.audio.toastDuration);
-    };
-
-    const handlePause = () => {
-      setIsPlaying(false);
+      const timer = setTimeout(
+        () => setShowToast(false),
+        config.audio?.toastDuration || 3000,
+      );
+      return () => clearTimeout(timer);
+    } else {
       setShowToast(false);
-    };
-
-    if (audioRef.current) {
-      audioRef.current.addEventListener("play", handlePlay);
-      audioRef.current.addEventListener("pause", handlePause);
     }
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("blur", handleWindowBlur);
-    window.addEventListener("focus", handleWindowFocus);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("blur", handleWindowBlur);
-      window.removeEventListener("focus", handleWindowFocus);
-
-      if (audioRef.current) {
-        audioRef.current.removeEventListener("play", handlePlay);
-        audioRef.current.removeEventListener("pause", handlePause);
-      }
-    };
-  }, [isPlaying]);
-
-  // Toggle music function
-  const toggleMusic = async () => {
-    if (audioRef.current) {
-      try {
-        if (isPlaying) {
-          audioRef.current.pause();
-          wasPlayingRef.current = false;
-        } else {
-          await audioRef.current.play();
-          wasPlayingRef.current = true;
-        }
-      } catch (error) {
-        console.error("Playback error:", error);
-      }
-    }
-  };
-
-  // Handle page unload
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, []);
+  }, [isPlaying, config.audio?.toastDuration]);
 
   return (
     <div className="relative min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
@@ -160,26 +43,29 @@ const Layout = ({ children }) => {
         transition={{ duration: 0.5 }}
       >
         {/* Music Control Button with Status Indicator */}
-        <motion.button
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleMusic}
-          className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg border border-rose-100/50"
-        >
-          {isPlaying ? (
-            <div className="relative">
-              <PauseCircle className="w-6 h-6 text-rose-500" />
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            </div>
-          ) : (
-            <PlayCircle className="w-6 h-6 text-rose-500" />
-          )}
-        </motion.button>
+        {toggle && (
+          <motion.button
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggle}
+            className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg border border-rose-100/50"
+          >
+            {isPlaying ? (
+              <div className="relative">
+                <PauseCircle className="w-6 h-6 text-rose-500" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              </div>
+            ) : (
+              <PlayCircle className="w-6 h-6 text-rose-500" />
+            )}
+          </motion.button>
+        )}
 
         <main className="relative h-full w-full pb-[100px]">{children}</main>
         <BottomBar />
+
         {/* Music Info Toast */}
         <AnimatePresence>
           {showToast && (
