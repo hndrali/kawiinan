@@ -75,6 +75,7 @@ For detailed setup instructions, see [Getting Started](docs/tutorials/getting-st
 | **How-To Guides**                                        |                                                 |
 | [Personalized Links](docs/how-to/personalized-links.md)  | Generate and distribute guest invitation links  |
 | [Deployment](docs/how-to/deployment.md)                  | Deploy to Cloudflare Workers or other platforms |
+| [Testing](docs/how-to/testing.md)                        | Write and run unit, integration, and E2E tests  |
 | **Reference**                                            |                                                 |
 | [API Reference](docs/reference/api.md)                   | REST API endpoints and schemas                  |
 | [Project Structure](docs/reference/project-structure.md) | Codebase organization and conventions           |
