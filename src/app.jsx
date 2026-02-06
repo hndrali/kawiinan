@@ -18,6 +18,7 @@
 import { useState, lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { Heart } from "lucide-react";
 import { useInvitation } from "@/features/invitation";
 import staticConfig from "@/config/config";
 
@@ -60,7 +61,10 @@ function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto mb-4"></div>
+          <Heart
+            className="h-12 w-12 text-rose-500 mx-auto mb-4 animate-pulse"
+            fill="currentColor"
+          />
           <p className="text-gray-600">Memuat undangan...</p>
         </div>
       </div>
@@ -129,7 +133,10 @@ function App() {
         fallback={
           <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-50">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto mb-4"></div>
+              <Heart
+                className="h-12 w-12 text-rose-500 mx-auto mb-4 animate-pulse"
+                fill="currentColor"
+              />
               <p className="text-gray-600">Memuat...</p>
             </div>
           </div>
