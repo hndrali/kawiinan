@@ -4,7 +4,8 @@ export const api = {
   // Invitation
   async getInvitation(uid) {
     const res = await fetch(`${API_BASE}/api/invitation/${uid}`)
-    return res.json()
+    const result = await res.json()
+    return result.data
   },
 
   // Wishes

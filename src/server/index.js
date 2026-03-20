@@ -28,10 +28,13 @@ app.use("*", logger());
 app.use(
   "*",
   cors({
-    origin: ["*"],
-    allowMethods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "*",
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type"]
   }),
 );
+
+app.options("*", cors());
 
 // ============ Mount Feature Routes ============
 

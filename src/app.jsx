@@ -52,7 +52,7 @@ const LandingPage = lazy(
  */
 function App() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
-  const { config, isLoading, error } = useInvitation();
+  const { config, isLoading, error, guestName } = useInvitation();
 
   // Use config from API if available, otherwise fall back to static config
   const activeConfig = config || staticConfig.data;
@@ -159,7 +159,7 @@ function App() {
       >
         <AnimatePresence mode="wait">
           {!isInvitationOpen ? (
-            <LandingPage onOpenInvitation={handleOpenInvitation} />
+            <LandingPage onOpenInvitation={handleOpenInvitation} guestName={guestName} />
           ) : (
             <Layout audioControls={audioControls}>
               <MainContent />

@@ -1,10 +1,8 @@
 import { useConfig } from "@/features/invitation/hooks/use-config";
-import { formatEventDate } from "@/lib/format-event-date";
 import { motion } from "framer-motion";
-import { Calendar, Clock } from "lucide-react";
 
-const LandingPage = ({ onOpenInvitation }) => {
-  const config = useConfig(); // Use hook to get config from API or fallback to static
+const LandingPage = ({ onOpenInvitation, guestName }) => {
+  const config = useConfig();
 
   return (
     <motion.div
@@ -13,10 +11,79 @@ const LandingPage = ({ onOpenInvitation }) => {
       exit={{ opacity: 0 }}
       className="min-h-screen relative overflow-hidden"
     >
-      {/* Decorative Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
-      <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-rose-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-pink-100/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+      {/* Background */}
+      <div className="absolute inset-0 bg-[#fdf6f0]" />
+
+      {/* Background pattern */}
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `radial-gradient(circle, #d4a0a0 1px, transparent 1px)`,
+          backgroundSize: "24px 24px",
+        }}
+      />
+
+      {/* Floral SVG sudut kiri atas */}
+      <div className="absolute top-0 left-0 w-48 h-48 opacity-30">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="18" fill="#e8a0a0" />
+          <circle cx="60" cy="15" r="12" fill="#f0b8b8" />
+          <circle cx="15" cy="60" r="12" fill="#f0b8b8" />
+          <circle cx="80" cy="40" r="10" fill="#e8c4c4" />
+          <circle cx="40" cy="80" r="10" fill="#e8c4c4" />
+          <circle cx="100" cy="20" r="8" fill="#f5d0d0" />
+          <circle cx="20" cy="100" r="8" fill="#f5d0d0" />
+          <line x1="30" y1="30" x2="80" y2="80" stroke="#c47a7a" strokeWidth="1.5" />
+          <line x1="30" y1="30" x2="15" y2="60" stroke="#c47a7a" strokeWidth="1.5" />
+          <line x1="30" y1="30" x2="60" y2="15" stroke="#c47a7a" strokeWidth="1.5" />
+          <ellipse cx="55" cy="55" rx="15" ry="8" fill="#d4a0a0" transform="rotate(-45 55 55)" />
+          <ellipse cx="70" cy="70" rx="12" ry="6" fill="#e8b4b4" transform="rotate(-45 70 70)" />
+        </svg>
+      </div>
+
+      {/* Floral SVG sudut kanan atas */}
+      <div className="absolute top-0 right-0 w-48 h-48 opacity-30" style={{ transform: "scaleX(-1)" }}>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="18" fill="#e8a0a0" />
+          <circle cx="60" cy="15" r="12" fill="#f0b8b8" />
+          <circle cx="15" cy="60" r="12" fill="#f0b8b8" />
+          <circle cx="80" cy="40" r="10" fill="#e8c4c4" />
+          <circle cx="40" cy="80" r="10" fill="#e8c4c4" />
+          <circle cx="100" cy="20" r="8" fill="#f5d0d0" />
+          <circle cx="20" cy="100" r="8" fill="#f5d0d0" />
+          <line x1="30" y1="30" x2="80" y2="80" stroke="#c47a7a" strokeWidth="1.5" />
+          <line x1="30" y1="30" x2="15" y2="60" stroke="#c47a7a" strokeWidth="1.5" />
+          <line x1="30" y1="30" x2="60" y2="15" stroke="#c47a7a" strokeWidth="1.5" />
+          <ellipse cx="55" cy="55" rx="15" ry="8" fill="#d4a0a0" transform="rotate(-45 55 55)" />
+          <ellipse cx="70" cy="70" rx="12" ry="6" fill="#e8b4b4" transform="rotate(-45 70 70)" />
+        </svg>
+      </div>
+
+      {/* Floral SVG sudut kiri bawah */}
+      <div className="absolute bottom-0 left-0 w-48 h-48 opacity-30" style={{ transform: "scaleY(-1)" }}>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="18" fill="#e8a0a0" />
+          <circle cx="60" cy="15" r="12" fill="#f0b8b8" />
+          <circle cx="15" cy="60" r="12" fill="#f0b8b8" />
+          <circle cx="80" cy="40" r="10" fill="#e8c4c4" />
+          <circle cx="40" cy="80" r="10" fill="#e8c4c4" />
+          <line x1="30" y1="30" x2="80" y2="80" stroke="#c47a7a" strokeWidth="1.5" />
+          <ellipse cx="55" cy="55" rx="15" ry="8" fill="#d4a0a0" transform="rotate(-45 55 55)" />
+        </svg>
+      </div>
+
+      {/* Floral SVG sudut kanan bawah */}
+      <div className="absolute bottom-0 right-0 w-48 h-48 opacity-30" style={{ transform: "scale(-1)" }}>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="18" fill="#e8a0a0" />
+          <circle cx="60" cy="15" r="12" fill="#f0b8b8" />
+          <circle cx="15" cy="60" r="12" fill="#f0b8b8" />
+          <circle cx="80" cy="40" r="10" fill="#e8c4c4" />
+          <circle cx="40" cy="80" r="10" fill="#e8c4c4" />
+          <line x1="30" y1="30" x2="80" y2="80" stroke="#c47a7a" strokeWidth="1.5" />
+          <ellipse cx="55" cy="55" rx="15" ry="8" fill="#d4a0a0" transform="rotate(-45 55 55)" />
+        </svg>
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
@@ -27,31 +94,39 @@ const LandingPage = ({ onOpenInvitation }) => {
           className="w-full max-w-md"
         >
           {/* Card Container */}
-          <div className="backdrop-blur-sm bg-white/50 p-6 sm:p-8 md:p-10 rounded-2xl border border-rose-100/50 shadow-xl">
-            {/* Top Decorative Line */}
-            <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8">
-              <div className="h-px w-12 sm:w-16 bg-rose-200/50" />
-              <div className="w-2 h-2 rounded-full bg-rose-300" />
-              <div className="h-px w-12 sm:w-16 bg-rose-200/50" />
-            </div>
+          <div className="bg-white/70 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl border border-rose-100 shadow-xl">
 
-            {/* Date and Time */}
+            {/* Logo / Monogram */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="flex justify-center mb-4"
+            >
+              <img
+                src="/images/logo.png"
+                alt="Logo"
+                className="w-40 h-40 object-contain"
+              />
+            </motion.div>
+
+            {/* Ornamen garis + judul */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col gap-4 mb-6 sm:mb-8 items-center"
+              className="text-center mb-4"
             >
-              <div className="inline-flex flex-col items-center space-y-1 bg-white/80 px-4 sm:px-6 py-2 sm:py-3 rounded-xl">
-                <Calendar className="w-5 h-5 text-rose-400" />
-                <p className="text-gray-700 font-medium">
-                  {formatEventDate(config.date)}
-                </p>
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <div className="h-px w-10 bg-rose-300" />
+                <span className="text-rose-300 text-xs">✦</span>
+                <div className="h-px w-10 bg-rose-300" />
               </div>
-
-              <div className="inline-flex flex-col items-center space-y-1 bg-white/80 px-4 sm:px-6 py-2 sm:py-3 rounded-xl">
-                <Clock className="w-5 h-5 text-rose-400" />
-                <p className="text-gray-700 font-medium">{config.time}</p>
+              <p className="text-base text-gray-400 italic">Walimatul 'Urs</p>
+              <div className="flex items-center justify-center gap-3 mt-3">
+                <div className="h-px w-10 bg-rose-300" />
+                <span className="text-rose-300 text-xs">✦</span>
+                <div className="h-px w-10 bg-rose-300" />
               </div>
             </motion.div>
 
@@ -60,16 +135,30 @@ const LandingPage = ({ onOpenInvitation }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="text-center space-y-4"
+              className="text-center space-y-4 mb-6"
             >
               <div className="space-y-2">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-800 leading-tight">
-                  {config.groomName}
+                  {config.groomNickname}
                   <span className="text-rose-400 mx-2 sm:mx-3">&</span>
-                  {config.brideName}
+                  {config.brideNickname}
                 </h1>
                 <div className="h-px w-16 sm:w-24 mx-auto bg-rose-200" />
               </div>
+            </motion.div>
+
+            {/* Kepada Tamu */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-center mb-6"
+            >
+              <p className="text-sm text-gray-400">Kepada Bapak/Ibu/Saudara/i</p>
+              <p className="text-lg font-semibold text-gray-800 mt-1">
+                {guestName || "Tamu Undangan"}
+              </p>
+              <p className="text-sm text-gray-400 mt-1">di Tempat</p>
             </motion.div>
 
             {/* Open Invitation Button */}
@@ -77,7 +166,6 @@ const LandingPage = ({ onOpenInvitation }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="mt-6 sm:mt-8"
             >
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -97,6 +185,7 @@ const LandingPage = ({ onOpenInvitation }) => {
                 <div className="absolute inset-0 bg-gradient-to-r from-rose-600 to-rose-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
               </motion.button>
             </motion.div>
+
           </div>
         </motion.div>
       </div>

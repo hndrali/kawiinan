@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useEffect } from "react";
+import { createContext, useContext, useMemo, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchInvitation } from "@/services/api";
@@ -36,6 +36,10 @@ const InvitationContext = createContext(null);
 export function InvitationProvider({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [guestName, setGuestName] = useState(
+    () => localStorage.getItem("sakeenah_guest_name")
+  );
 
   const invitationUid = useMemo(() => {
     // Extract UID from URL first (to check if it's different)
@@ -92,10 +96,13 @@ export function InvitationProvider({ children }) {
   // Extract and store guest name from URL, then clean URL
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const guestParam = urlParams.get("guest");
+    const toParam = urlParams.get("to");       // ambil dari ?to=Pak+Budi
+    const guestParam = urlParams.get("guest"); // ambil dari ?guest=base64 (lama)
 
-    // Store guest name if present (even if different from stored - auto-update)
-    if (guestParam) {
+    if (toParam) {
+      storeGuestName(toParam);
+      setGuestName(toParam);
+    } else if (guestParam) {
       try {
         const decodedName = safeBase64.decode(guestParam);
         if (decodedName) {
@@ -106,6 +113,7 @@ export function InvitationProvider({ children }) {
             );
           }
           storeGuestName(decodedName);
+          setGuestName(decodedName);
         }
       } catch (error) {
         console.error("Error decoding guest name:", error);
@@ -116,8 +124,9 @@ export function InvitationProvider({ children }) {
     const hasUidInPath = location.pathname !== "/" && location.pathname !== "";
     const hasGuestParam = urlParams.has("guest");
     const hasUidParam = urlParams.has("uid");
+    const hasToParam = urlParams.has("to");
 
-    if (hasUidInPath || hasGuestParam || hasUidParam) {
+    if (hasUidInPath || hasGuestParam || hasUidParam || hasToParam) {
       // Only clean URL if we have data stored
       if (hasInvitationData()) {
         // Use window.history.replaceState for clean URL without reload
@@ -145,7 +154,7 @@ export function InvitationProvider({ children }) {
 
   return (
     <InvitationContext.Provider
-      value={{ uid: invitationUid, config, isLoading, error: error?.message }}
+      value={{ uid: invitationUid, config, isLoading, error: error?.message, guestName }}
     >
       {children}
     </InvitationContext.Provider>

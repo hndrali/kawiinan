@@ -65,7 +65,7 @@ export const formatEventDate = (isoString, format = 'full', isJakartaTime = fals
 
     // Indonesian day names mapping
     const daysIndonesian = {
-        'Sunday': 'Minggu',
+        'Sunday': 'Ahad',
         'Monday': 'Senin',
         'Tuesday': 'Selasa',
         'Wednesday': 'Rabu',
@@ -92,12 +92,13 @@ export const formatEventDate = (isoString, format = 'full', isJakartaTime = fals
 
     // Format adjustment for full date
     if (format === 'full') {
-        // Convert "Hari, Tanggal Bulan Tahun" format
-        const parts = formatted.split(', ');
-        if (parts.length === 2) {
-            formatted = `${parts[0]}, ${parts[1]}`;
-        }
+    const parts = formatted.split(', ');
+    if (parts.length === 3) {
+        const [month, day] = parts[1].split(' ');
+        const year = parts[2];
+        formatted = `${parts[0]}, ${day} ${month} ${year}`;
     }
+}
 
     return formatted;
 };

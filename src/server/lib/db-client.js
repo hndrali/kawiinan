@@ -7,15 +7,17 @@
  * Get database client based on environment
  * @param {import('hono').Context} c - Hono context
  * @returns {Promise<import('pg').Pool>} Database pool
- */
-export async function getDbClient(c) {
+ */ 
+export async function getDbClient(c) {  
   // Check if running in Cloudflare Workers with Hyperdrive
   if (c.env?.DB) {
     return c.env.DB;
   }
 
   // Check if we have DATABASE_URL in env (for Wrangler dev with .env)
-  if (c.env?.DATABASE_URL) {
+  const DATABASE_URL = c.env?.DATABASE_URL || process.env.DATABASE_URL;
+
+  if (DATABASE_URL) {
     // In Wrangler dev mode, use node-postgres via dynamic import
     try {
       const pg = await import("pg");
@@ -23,7 +25,7 @@ export async function getDbClient(c) {
 
       // Create a connection pool using DATABASE_URL from env
       const pool = new Pool({
-        connectionString: c.env.DATABASE_URL,
+        connectionString: DATABASE_URL,
       });
 
       return pool;
