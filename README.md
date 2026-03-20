@@ -130,11 +130,6 @@ Copyright (c) 2024-present mrofisr
 - Icons from [Lucide](https://lucide.dev/)
 - Hosted on [Cloudflare Workers](https://workers.cloudflare.com/)
 
-## Contact
-
-- GitHub: [@mrofisr](https://github.com/mrofisr)
-- Instagram: [@mrofisr](https://instagram.com/mrofisr)
-
 ---
 
 **"And among His signs is that He created for you spouses from among yourselves so that you may find comfort in them."** - Quran 30:21
