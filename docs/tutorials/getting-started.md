@@ -13,8 +13,8 @@ This tutorial walks you through setting up your first wedding invitation with Sa
 ### 1. Clone and Install Dependencies
 
 ```bash
-git clone https://github.com/mrofisr/sakeenah.git
-cd sakeenah
+git clone https://github.com/hndrali/kawiinan.git
+cd kawiinan
 bun install
 ```
 
@@ -22,10 +22,10 @@ bun install
 
 ```bash
 # Create database
-createdb sakeenah
+createdb kawiinan
 
 # Apply schema
-psql -d sakeenah -f src/server/db/schema.sql.example
+psql -U postgres -d kawiinan -f src/server/db/schema.sql.example
 ```
 
 ### 3. Configure Environment Variables
@@ -41,22 +41,18 @@ Edit `.env` with your settings:
 VITE_API_URL=http://localhost:3000
 
 # Backend
-DATABASE_URL=postgresql://username:password@localhost:5432/sakeenah
+DATABASE_URL=postgresql://username:password@localhost:5432/kawiinan
 PORT=3000
 ```
+ganti ussername sama pw postgresql mu
 
 ### 4. Add Your Wedding Data
 
 ```bash
-# Copy the SQL template
-cp src/server/db/add-wedding.sql.example my-wedding.sql
-
-# Edit my-wedding.sql with your wedding details
 # Then insert into database
-psql -d sakeenah -f my-wedding.sql
+psql -U postgres -d kawiinan -f my-wedding.sql
 ```
 
-This creates your wedding invitation with a unique UID (e.g., `ahmad-fatimah-2025`).
 
 ### 5. Start Development Servers
 
@@ -68,10 +64,9 @@ This runs both frontend (Vite on port 5173) and backend (Hono API on port 3000) 
 
 ### 6. Access Your Invitation
 
-- **Frontend**: `http://localhost:5173/your-wedding-uid`
-- **API endpoint**: `http://localhost:3000/api/invitation/your-wedding-uid`
+- **Frontend**: `http://localhost:5173/basir-farah-2026?to=Pak+Budi`
+- **API endpoint**: `http://localhost:3000/api/invitation/basir-farah-2026d`
 
-Replace `your-wedding-uid` with the UID you defined in your SQL file.
 
 ## Next Steps
 
