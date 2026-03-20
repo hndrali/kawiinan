@@ -56,8 +56,8 @@ Sakeenah is a production-ready, database-driven wedding invitation platform desi
 ### Installation
 
 ```bash
-git clone https://github.com/mrofisr/sakeenah.git
-cd sakeenah
+git clone https://github.com/hndrali/kawiinan.git
+cd kawiinan
 bun install
 cp .env.example .env
 # Edit .env with your DATABASE_URL
