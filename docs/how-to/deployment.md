@@ -17,8 +17,8 @@ Deploy full-stack application to Cloudflare's edge network.
 2. **Create Hyperdrive connection:**
 
    ```bash
-   wrangler hyperdrive create sakeenah-db \
-     --connection-string="postgresql://user:pass@host:5432/sakeenah"
+   wrangler hyperdrive create kawiinan-db \
+     --connection-string="postgresql://user:pass@host:5432/kawiinan"
    ```
 
 3. **Update `wrangler.jsonc`** with your Hyperdrive ID and custom domain
@@ -65,7 +65,7 @@ Deploy the `dist/` folder after running `bun run build`.
 
 ```env
 VITE_API_URL=https://api.yourdomain.com
-DATABASE_URL=postgresql://user:pass@production-host:5432/sakeenah
+DATABASE_URL=postgresql://user:pass@production-host:5432/kawiinan
 ```
 
 ### Build Commands
